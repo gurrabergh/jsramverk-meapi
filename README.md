@@ -1,4 +1,4 @@
-# mesida
+# me-api
 
 ## Project setup
 ```
