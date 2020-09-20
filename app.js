@@ -188,12 +188,12 @@ app.post("/register", (req, res) => {
 });
 
 app.post("/login", (req, res) => {
-    checkLogin(req, res)
-    // return res.status(201).json({
-    //     data: {
-    //         msg: process.env.JWT_SECRET
-    //     }
-    // });
+    // checkLogin(req, res)
+    return res.status(201).json({
+        data: {
+            msg: env.JWT_SECRET
+        }
+    });
 });
 
 app.post("/reports",
