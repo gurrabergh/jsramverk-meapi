@@ -6,6 +6,7 @@ const cors = require('cors');
 var bcrypt = require('bcryptjs');
 const sqlite3 = require('sqlite3').verbose();
 const db = new sqlite3.Database('./db/texts.sqlite');
+require('dotenv').config()
 
 const port = 1337;
 
@@ -191,7 +192,7 @@ app.post("/login", (req, res) => {
     // checkLogin(req, res)
     return res.status(201).json({
         data: {
-            msg: env.JWT_SECRET
+            msg: process.env.JWT_SECRET
         }
     });
 });
