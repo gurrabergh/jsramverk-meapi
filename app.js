@@ -294,7 +294,7 @@ function checkToken(req, res, next) {
             return res.status(201).json({
                 data: {
                     msg: 'not authorized jwt',
-                    jwt: req.headers['x-access-token']
+                    jwt: err
                 }
             });
         }
