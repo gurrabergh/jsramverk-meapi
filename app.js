@@ -187,7 +187,7 @@ app.post("/register", (req, res) => {
 
 });
 
-app.post("/login", (req, res, next) => {
+app.post("/login", (req, res) => {
     checkLogin(req, res)
     // return res.status(201).json({
     //     data: {
@@ -228,7 +228,8 @@ function checkLogin(req, res) {
     const sqlite3 = require('sqlite3').verbose();
     const db = new sqlite3.Database('./db/texts.sqlite');
     var msg = '';
-    console.log(req.body)
+    console.log(req.body);
+    console.log(process.env.JWT_SECRET);
     let sql = "SELECT password FROM users WHERE email = ?";
         db.get(sql, [req.body.usr], (err, row) => {
             if (err) {
