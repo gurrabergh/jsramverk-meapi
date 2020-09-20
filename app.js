@@ -164,7 +164,6 @@ app.post("/register", (req, res) => {
     const sqlite3 = require('sqlite3').verbose();
     const db = new sqlite3.Database('./db/texts.sqlite');
     var msg = '';
-    console.log(req.body)
     bcrypt.genSalt(10, function(err, salt) {
         bcrypt.hash(req.body.psw, salt, function(err, hash) {
             db.run("INSERT INTO users (email, password) VALUES (?, ?)",
@@ -189,12 +188,7 @@ app.post("/register", (req, res) => {
 });
 
 app.post("/login", (req, res) => {
-    // checkLogin(req, res)
-    return res.status(201).json({
-        data: {
-            msg: process.env.JWT_SECRET
-        }
-    });
+    checkLogin(req, res)
 });
 
 app.post("/reports",
