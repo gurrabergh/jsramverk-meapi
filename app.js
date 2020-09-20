@@ -293,7 +293,8 @@ function checkToken(req, res, next) {
             console.log('fail')
             return res.status(201).json({
                 data: {
-                    msg: 'not authorized jwt'
+                    msg: 'not authorized jwt',
+                    jwt: process.env.JWT_SECRET
                 }
             });
         }
