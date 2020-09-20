@@ -266,7 +266,7 @@ function checkLogin(req, res) {
                     if (result == true) {
                         const jwt = require('jsonwebtoken');
                         const payload = { email: req.body.usr };
-                        const secret = '123kn1o2ih568o1238y';
+                        const secret = process.env.JWT_SECRET;
                         const token = jwt.sign(payload, secret, { expiresIn: '1h'});
                         return res.status(201).json({
                             data: {
