@@ -188,12 +188,12 @@ app.post("/register", (req, res) => {
 });
 
 app.post("/login", (req, res) => {
-    // checkLogin(req, res)
-    return res.status(201).json({
-        data: {
-            msg: process.env.JWT_SECRET
-        }
-    });
+    checkLogin(req, res)
+    // return res.status(201).json({
+    //     data: {
+    //         msg: process.env.JWT_SECRET
+    //     }
+    // });
 });
 
 app.post("/reports",
@@ -245,7 +245,7 @@ function checkLogin(req, res) {
                     if (result == true) {
                         const jwt = require('jsonwebtoken');
                         const payload = { email: req.body.usr };
-                        const secret = process.env.JWT_SECRET;
+                        const secret = '123kn1o2ih568o1238y';
                         const token = jwt.sign(payload, secret, { expiresIn: '1h'});
                         return res.status(201).json({
                             data: {
