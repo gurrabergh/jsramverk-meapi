@@ -107,6 +107,32 @@ app.get("/reports/week/2", (req, res) => {
     });
 });
 
+app.get("/reports/week/3", (req, res) => {
+    let sql = "SELECT heading, content FROM texts WHERE id = 4";
+    db.get(sql, (err, row) => {
+        if (err) {
+            return res.status(201).json({
+                data: {
+                    msg: 'text failed'
+                }
+            });
+        }
+        if (row) {
+            return res.status(201).json({
+                data: {
+                    text: row
+                }
+            });
+        } else {
+            return res.status(201).json({
+                data: {
+                    msg: 'text failed'
+                }
+            });
+        }
+    });
+});
+
 app.get("/admin", (req, res) => {
     let sql = "SELECT * FROM texts";
     db.all(sql, (err, row) => {
