@@ -188,12 +188,12 @@ app.post("/register", (req, res) => {
 });
 
 app.post("/login", (req, res, next) => {
-    // checkLogin(req, res)
-    return res.status(201).json({
-        data: {
-            msg: 'test'
-        }
-    });
+    checkLogin(req, res)
+    // return res.status(201).json({
+    //     data: {
+    //         msg: 'test'
+    //     }
+    // });
 });
 
 app.post("/reports",
