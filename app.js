@@ -293,7 +293,7 @@ function checkToken(req, res, next) {
             console.log('fail')
             return res.status(201).json({
                 data: {
-                    msg: 'not authorized'
+                    msg: 'not authorized jwt'
                 }
             });
         }
@@ -309,7 +309,7 @@ function addReport(res, body) {
             console.log(err.message);
             return res.status(201).json({
             data: {
-                msg: 'not authorized'
+                msg: 'not authorized add'
             }
         });
         }
