@@ -14,12 +14,6 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 
-app.use((req, res, next) => {
-    console.log(req.method);
-    console.log(req.path);
-    next();
-});
-
 if (process.env.NODE_ENV !== 'test') {
     // use morgan to log at command line
     app.use(morgan('combined')); // 'combined' outputs the Apache style LOGs
@@ -252,7 +246,7 @@ function checkLogin(req, res) {
         }
         if (row) {
             bcrypt.compare(req.body.psw, row.password, function(err, result) {
-                if (result == true) {
+                if (result === true) {
                     const jwt = require('jsonwebtoken');
                     const payload = { email: req.body.usr };
                     const secret = process.env.JWT_SECRET;
@@ -278,6 +272,7 @@ function checkLogin(req, res) {
             });
         }
     });
+    return undefined;
 }
 
 function checkToken(req, res, next) {
@@ -295,6 +290,7 @@ function checkToken(req, res, next) {
         }
         next();
     });
+    return undefined;
 }
 
 function addReport(res, body) {
@@ -351,6 +347,6 @@ function deleteReport(res, body) {
 }
 
 // Start up server
-const server = app.listen(port, () => console.log(`Example API listening on port ${port}!`));
+const server = app.listen(port);
 
 module.exports = server;

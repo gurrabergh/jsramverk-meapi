@@ -144,8 +144,7 @@ describe('Edit Reports', () => {
     ];
 
     tests.forEach(function(test) {
-        let token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRvZSIsImlhdCI6MTYwMTE'
-            + '1MTM5NSwiZXhwIjoxNjMyNjg3Mzk1fQ.D_mEJZXMQ7XKFPR0y6fECy1tM9YkgP1HuLpIFnbhYuE';
+        let token = process.env.JWT_TOKEN;
 
         describe('POST' + test, () => {
             it('Testing post routes', (done) => {
