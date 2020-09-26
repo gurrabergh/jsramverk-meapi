@@ -1,5 +1,5 @@
 build:
-environment:
+  environment:
     variables:
       JWT_SECRET: 'WGKvGsFnXBMb5dXGLHqVBcTUJReRQUumgZQYt8Rmp6XZsHMUMRUzKUDrwAPeBdef'
   nodes:
