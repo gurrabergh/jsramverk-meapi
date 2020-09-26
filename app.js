@@ -289,8 +289,8 @@ function checkToken(req, res, next) {
             });
         }
         next();
+        return undefined;
     });
-    return undefined;
 }
 
 function addReport(res, body) {
