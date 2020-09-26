@@ -126,9 +126,6 @@ describe('Edit Reports', () => {
                     .end((err, res) => {
                         res.should.have.status(403);
                         res.body.data.should.be.an("object");
-                        // res.body.data.text.should.be.an("object");
-                        // res.body.data.text.heading.length.should.be.above(0);
-                        // res.body.data.text.content.length.should.be.above(0);
                         done();
                     });
             });
@@ -154,9 +151,6 @@ describe('Edit Reports', () => {
                     .end((err, res) => {
                         res.should.have.status(201);
                         res.body.data.should.be.an("object");
-                        // res.body.data.text.should.be.an("object");
-                        // res.body.data.text.heading.length.should.be.above(0);
-                        // res.body.data.text.content.length.should.be.above(0);
                         done();
                     });
             });
