@@ -8,6 +8,8 @@ chai.should();
 
 chai.use(chaiHttp);
 
+let token;
+
 describe('Reports', () => {
     var tests = [
         "/reports/week/1",
@@ -88,8 +90,7 @@ describe('Login', () => {
                 .end((err, res) => {
                     res.should.have.status(201);
                     res.body.should.be.an("object");
-                    // res.body.data.should.be.an("object");
-                    // res.body.data.length.should.be.above(0);
+                    token = res.body.data.token;
 
                     done();
                 });
@@ -106,8 +107,6 @@ describe('Login', () => {
                 .end((err, res) => {
                     res.should.have.status(403);
                     res.body.should.be.an("object");
-                    // res.body.data.should.be.an("object");
-                    // res.body.data.length.should.be.above(0);
 
                     done();
                 });
@@ -148,9 +147,6 @@ describe('Edit Reports', () => {
     ];
 
     tests.forEach(function(test) {
-        let token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRvZSIsImlhdCI6MTYwM'
-        + 'TE0NDY2NSwiZXhwIjoxNjAxMTQ4MjY1fQ.5ggBCooOU2B9DQbmplNsW8eONgG4rglKPeGboN4uMYo';
-
         describe('POST' + test, () => {
             it('Testing post routes', (done) => {
                 chai.request(server)

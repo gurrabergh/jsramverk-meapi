@@ -4,6 +4,7 @@ const bodyParser = require("body-parser");
 const morgan = require('morgan');
 const cors = require('cors');
 var bcrypt = require('bcryptjs');
+
 const db = require("./db/database.js");
 const port = 1337;
 
@@ -154,7 +155,7 @@ app.get("/admin", (req, res) => {
                 msg: 'text failed'
             }
         });
-});
+    });
 });
 
 app.get("/admin/edit/:id", (req, res) => {
@@ -196,7 +197,7 @@ app.post("/register", (req, res) => {
                             }
                         });
                     }
-                    res.status(201).json({
+                    return res.status(201).json({
                         data: {
                             msg: 'success'
                         }
@@ -262,21 +263,19 @@ function checkLogin(req, res) {
                             token: token
                         }
                     });
-                } else {
-                    return res.status(403).json({
-                        data: {
-                            msg: 'login failed'
-                        }
-                    });
                 }
-            });
-        } else {
-            return res.status(403).json({
-                data: {
-                    msg: 'login failed'
-                }
+                return res.status(403).json({
+                    data: {
+                        msg: 'login failed'
+                    }
+                });
             });
         }
+        return res.status(403).json({
+            data: {
+                msg: 'login failed'
+            }
+        });
     });
 }
 
