@@ -270,12 +270,13 @@ function checkLogin(req, res) {
                     }
                 });
             });
+        } else {
+            return res.status(403).json({
+                data: {
+                    msg: 'login failed'
+                }
+            });
         }
-        return res.status(403).json({
-            data: {
-                msg: 'login failed'
-            }
-        });
     });
 }
 

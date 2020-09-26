@@ -8,8 +8,6 @@ chai.should();
 
 chai.use(chaiHttp);
 
-let token;
-
 describe('Reports', () => {
     var tests = [
         "/reports/week/1",
@@ -90,7 +88,6 @@ describe('Login', () => {
                 .end((err, res) => {
                     res.should.have.status(201);
                     res.body.should.be.an("object");
-                    token = res.body.data.token;
 
                     done();
                 });
@@ -147,6 +144,9 @@ describe('Edit Reports', () => {
     ];
 
     tests.forEach(function(test) {
+        let token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRvZSIsImlhdCI6MTYwMTE'
+            + '1MTM5NSwiZXhwIjoxNjMyNjg3Mzk1fQ.D_mEJZXMQ7XKFPR0y6fECy1tM9YkgP1HuLpIFnbhYuE';
+
         describe('POST' + test, () => {
             it('Testing post routes', (done) => {
                 chai.request(server)
