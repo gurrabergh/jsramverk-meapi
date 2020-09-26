@@ -1,4 +1,4 @@
-# me-api[![Build Status](https://travis-ci.com/gurrabergh/jsramverk-meapi.svg?branch=master)](https://travis-ci.com/gurrabergh/jsramverk-meapi)
+# me-api[![Build Status](https://travis-ci.com/gurrabergh/jsramverk-meapi.svg?branch=master)](https://travis-ci.com/gurrabergh/jsramverk-meapi)[![Code Coverage](https://scrutinizer-ci.com/g/gurrabergh/jsramverk-meapi/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/gurrabergh/jsramverk-meapi/?branch=master)[![Build Status](https://scrutinizer-ci.com/g/gurrabergh/jsramverk-meapi/badges/build.png?b=master)](https://scrutinizer-ci.com/g/gurrabergh/jsramverk-meapi/build-status/master)[![Code Coverage](https://scrutinizer-ci.com/g/gurrabergh/jsramverk-meapi/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/gurrabergh/jsramverk-meapi/?branch=master)
 
 ## Project setup
 ```
