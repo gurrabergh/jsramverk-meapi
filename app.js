@@ -4,12 +4,10 @@ const bodyParser = require("body-parser");
 const morgan = require('morgan');
 const cors = require('cors');
 var bcrypt = require('bcryptjs');
-const sqlite3 = require('sqlite3').verbose();
-const db = new sqlite3.Database('./db/texts.sqlite');
-require('dotenv').config()
-
+const db = require("./db/database.js");
 const port = 1337;
 
+require('dotenv').config();
 app.use(cors());
 
 app.use(bodyParser.json());
@@ -31,9 +29,10 @@ if (process.env.NODE_ENV !== 'test') {
 // Add a route
 app.get("/", (req, res) => {
     let sql = "SELECT heading, content FROM texts WHERE id = 1";
+
     db.get(sql, (err, row) => {
         if (err) {
-            return res.status(201).json({
+            return res.status(403).json({
                 data: {
                     msg: 'text failed'
                 }
@@ -46,7 +45,7 @@ app.get("/", (req, res) => {
                 }
             });
         } else {
-            return res.status(201).json({
+            return res.status(403).json({
                 data: {
                     msg: 'text failed'
                 }
@@ -57,9 +56,10 @@ app.get("/", (req, res) => {
 
 app.get("/reports/week/1", (req, res) => {
     let sql = "SELECT heading, content FROM texts WHERE id = 2";
+
     db.get(sql, (err, row) => {
         if (err) {
-            return res.status(201).json({
+            return res.status(403).json({
                 data: {
                     msg: 'text failed'
                 }
@@ -72,7 +72,7 @@ app.get("/reports/week/1", (req, res) => {
                 }
             });
         } else {
-            return res.status(201).json({
+            return res.status(403).json({
                 data: {
                     msg: 'text failed'
                 }
@@ -83,9 +83,10 @@ app.get("/reports/week/1", (req, res) => {
 
 app.get("/reports/week/2", (req, res) => {
     let sql = "SELECT heading, content FROM texts WHERE id = 3";
+
     db.get(sql, (err, row) => {
         if (err) {
-            return res.status(201).json({
+            return res.status(403).json({
                 data: {
                     msg: 'text failed'
                 }
@@ -98,7 +99,7 @@ app.get("/reports/week/2", (req, res) => {
                 }
             });
         } else {
-            return res.status(201).json({
+            return res.status(403).json({
                 data: {
                     msg: 'text failed'
                 }
@@ -109,9 +110,10 @@ app.get("/reports/week/2", (req, res) => {
 
 app.get("/reports/week/3", (req, res) => {
     let sql = "SELECT heading, content FROM texts WHERE id = 4";
+
     db.get(sql, (err, row) => {
         if (err) {
-            return res.status(201).json({
+            return res.status(403).json({
                 data: {
                     msg: 'text failed'
                 }
@@ -124,7 +126,7 @@ app.get("/reports/week/3", (req, res) => {
                 }
             });
         } else {
-            return res.status(201).json({
+            return res.status(403).json({
                 data: {
                     msg: 'text failed'
                 }
@@ -135,9 +137,10 @@ app.get("/reports/week/3", (req, res) => {
 
 app.get("/admin", (req, res) => {
     let sql = "SELECT * FROM texts";
+
     db.all(sql, (err, row) => {
         if (err) {
-            return res.status(201).json({
+            return res.status(403).json({
                 data: {
                     msg: 'text failed'
                 }
@@ -150,7 +153,7 @@ app.get("/admin", (req, res) => {
                 }
             });
         } else {
-            return res.status(201).json({
+            return res.status(403).json({
                 data: {
                     msg: 'text failed'
                 }
@@ -160,11 +163,11 @@ app.get("/admin", (req, res) => {
 });
 
 app.get("/admin/edit/:id", (req, res) => {
-
     let sql = "SELECT id, heading, content FROM texts WHERE id = ?";
+
     db.get(sql, [req.params.id], (err, row) => {
         if (err) {
-            return res.status(201).json({
+            return res.status(403).json({
                 data: {
                     msg: 'text failed'
                 }
@@ -177,7 +180,7 @@ app.get("/admin/edit/:id", (req, res) => {
                 }
             });
         } else {
-            return res.status(201).json({
+            return res.status(403).json({
                 data: {
                     msg: 'text failed'
                 }
@@ -187,47 +190,43 @@ app.get("/admin/edit/:id", (req, res) => {
 });
 
 app.post("/register", (req, res) => {
-    const sqlite3 = require('sqlite3').verbose();
-    const db = new sqlite3.Database('./db/texts.sqlite');
-    var msg = '';
     bcrypt.genSalt(10, function(err, salt) {
         bcrypt.hash(req.body.psw, salt, function(err, hash) {
             db.run("INSERT INTO users (email, password) VALUES (?, ?)",
-            req.body.usr,
-            hash, (err) => {
-                if (err) {
-                    return res.status(201).json({
+                req.body.usr,
+                hash, (err) => {
+                    if (err) {
+                        return res.status(403).json({
+                            data: {
+                                msg: 'failed'
+                            }
+                        });
+                    }
+                    res.status(201).json({
                         data: {
-                            msg: 'failed'
+                            msg: 'success'
                         }
                     });
-                }
-                res.status(201).json({
-                    data: {
-                        msg: 'success'
-                    }
                 });
-            });
         });
     });
-
 });
 
 app.post("/login", (req, res) => {
-    checkLogin(req, res)
+    checkLogin(req, res);
 });
 
 app.post("/reports",
-(req, res, next) => checkToken(req, res, next),
-(req, res) => addReport(res, req.body));
+    (req, res, next) => checkToken(req, res, next),
+    (req, res) => addReport(res, req.body));
 
 app.post("/edit",
-(req, res, next) => checkToken(req, res, next),
-(req, res) => editReport(res, req.body));
+    (req, res, next) => checkToken(req, res, next),
+    (req, res) => editReport(res, req.body));
 
 app.post("/delete",
-(req, res, next) => checkToken(req, res, next),
-(req, res) => deleteReport(res, req.body));
+    (req, res, next) => checkToken(req, res, next),
+    (req, res) => deleteReport(res, req.body));
 
 app.use((err, req, res, next) => {
     if (res.headersSent) {
@@ -246,52 +245,54 @@ app.use((err, req, res, next) => {
 });
 
 function checkLogin(req, res) {
-    const sqlite3 = require('sqlite3').verbose();
-    const db = new sqlite3.Database('./db/texts.sqlite');
-    var msg = '';
-    console.log(req.body);
-    console.log(process.env.JWT_SECRET);
     let sql = "SELECT password FROM users WHERE email = ?";
-        db.get(sql, [req.body.usr], (err, row) => {
-            if (err) {
-                return res.status(201).json({
-                    data: {
-                        msg: 'login failed'
-                    }
-                });
-            }
-            if (row) {
-                bcrypt.compare(req.body.psw, row.password, function(err, result) {
-                    console.log(result)
-                    if (result == true) {
-                        const jwt = require('jsonwebtoken');
-                        const payload = { email: req.body.usr };
-                        const secret = process.env.JWT_SECRET;
-                        const token = jwt.sign(payload, secret, { expiresIn: '1h'});
-                        return res.status(201).json({
-                            data: {
-                                token: token
-                            }
-                        });
-                    }
-                });
-            } else {
-                return res.status(201).json({
-                    data: {
-                        msg: 'login failed'
-                    }
-                });
-            }
-        });
+
+    db.get(sql, [req.body.usr], (err, row) => {
+        if (err) {
+            return res.status(403).json({
+                data: {
+                    msg: 'login failed'
+                }
+            });
+        }
+        if (row) {
+            bcrypt.compare(req.body.psw, row.password, function(err, result) {
+                if (result == true) {
+                    const jwt = require('jsonwebtoken');
+                    const payload = { email: req.body.usr };
+                    const secret = process.env.JWT_SECRET;
+                    const token = jwt.sign(payload, secret, { expiresIn: '1h'});
+
+                    return res.status(201).json({
+                        data: {
+                            token: token
+                        }
+                    });
+                } else {
+                    return res.status(403).json({
+                        data: {
+                            msg: 'login failed'
+                        }
+                    });
+                }
+            });
+        } else {
+            return res.status(403).json({
+                data: {
+                    msg: 'login failed'
+                }
+            });
+        }
+    });
 }
 
 function checkToken(req, res, next) {
     const jwt = require('jsonwebtoken');
     const token = req.headers['x-access-token'];
-    jwt.verify(token, process.env.JWT_SECRET, function(err, decoded) {
+
+    jwt.verify(token, process.env.JWT_SECRET, function(err) {
         if (err) {
-            console.log('fail')
-            return res.status(201).json({
+            return res.status(403).json({
                 data: {
                     msg: 'not authorized jwt',
                     jwt: err
@@ -303,64 +304,59 @@ function checkToken(req, res, next) {
 }
 
 function addReport(res, body) {
-    const sqlite3 = require('sqlite3').verbose();
-    const db = new sqlite3.Database('./db/texts.sqlite');
-    db.run(`INSERT INTO texts (heading, content) VALUES(?,?)`, [body.heading, body.content], function(err) {
-        if (err) {
-            console.log(err.message);
-            return res.status(201).json({
-            data: {
-                msg: 'not authorized add'
+    db.run(`INSERT INTO texts (heading, content) VALUES(?,?)`,
+        [body.heading, body.content], function(err) {
+            if (err) {
+                return res.status(201).json({
+                    data: {
+                        msg: 'not authorized add'
+                    }
+                });
             }
+            return res.status(201).json({
+                data: {
+                    msg: 'success'
+                }
+            });
         });
-        }
-        return res.status(201).json({
-        data: {
-            msg: 'success'
-        }
-        });
-    });
 }
 
 function editReport(res, body) {
-    const sqlite3 = require('sqlite3').verbose();
-    const db = new sqlite3.Database('./db/texts.sqlite');
-    db.run(`UPDATE texts SET heading = ?, content = ? WHERE id = ?`, [body.heading, body.content, body.id], function(err) {
-        if (err) {
-            console.log(err.message);
+    db.run(`UPDATE texts SET heading = ?, content = ? WHERE id = ?`,
+        [body.heading, body.content, body.id], function(err) {
+            if (err) {
+                return res.status(401).json({
+                    data: {
+                        msg: 'not authorized'
+                    }
+                });
+            }
             return res.status(201).json({
-            data: {
-                msg: 'not authorized'
-            }
-        });
-        }
-        return res.status(201).json({
-            data: {
-                msg: 'success'
-            }
+                data: {
+                    msg: 'success'
+                }
             });
-    });
+        });
 }
 
 function deleteReport(res, body) {
-    const sqlite3 = require('sqlite3').verbose();
-    const db = new sqlite3.Database('./db/texts.sqlite');
     db.run(`DELETE FROM texts WHERE id = ?`, [body.id], function(err) {
         if (err) {
-            console.log(err.message);
-            return res.status(201).json({
-            data: {
-                msg: 'not authorized'
-            }
-        });
+            return res.status(401).json({
+                data: {
+                    msg: 'not authorized'
+                }
+            });
         }
         return res.status(201).json({
             data: {
                 msg: 'success'
             }
-            });
+        });
     });
 }
 
 // Start up server
-app.listen(port, () => console.log(`Example API listening on port ${port}!`));
+const server = app.listen(port, () => console.log(`Example API listening on port ${port}!`));
+
+module.exports = server;
