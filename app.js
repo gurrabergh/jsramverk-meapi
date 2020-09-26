@@ -44,13 +44,12 @@ app.get("/", (req, res) => {
                     text: row
                 }
             });
-        } else {
-            return res.status(403).json({
-                data: {
-                    msg: 'text failed'
-                }
-            });
         }
+        return res.status(403).json({
+            data: {
+                msg: 'text failed'
+            }
+        });
     });
 });
 
@@ -71,13 +70,12 @@ app.get("/reports/week/1", (req, res) => {
                     text: row
                 }
             });
-        } else {
-            return res.status(403).json({
-                data: {
-                    msg: 'text failed'
-                }
-            });
         }
+        return res.status(403).json({
+            data: {
+                msg: 'text failed'
+            }
+        });
     });
 });
 
@@ -98,13 +96,12 @@ app.get("/reports/week/2", (req, res) => {
                     text: row
                 }
             });
-        } else {
-            return res.status(403).json({
-                data: {
-                    msg: 'text failed'
-                }
-            });
         }
+        return res.status(403).json({
+            data: {
+                msg: 'text failed'
+            }
+        });
     });
 });
 
@@ -125,13 +122,12 @@ app.get("/reports/week/3", (req, res) => {
                     text: row
                 }
             });
-        } else {
-            return res.status(403).json({
-                data: {
-                    msg: 'text failed'
-                }
-            });
         }
+        return res.status(403).json({
+            data: {
+                msg: 'text failed'
+            }
+        });
     });
 });
 
@@ -152,14 +148,13 @@ app.get("/admin", (req, res) => {
                     text: row
                 }
             });
-        } else {
-            return res.status(403).json({
-                data: {
-                    msg: 'text failed'
-                }
-            });
         }
-    });
+        return res.status(403).json({
+            data: {
+                msg: 'text failed'
+            }
+        });
+});
 });
 
 app.get("/admin/edit/:id", (req, res) => {
@@ -179,13 +174,12 @@ app.get("/admin/edit/:id", (req, res) => {
                     text: row
                 }
             });
-        } else {
-            return res.status(403).json({
-                data: {
-                    msg: 'text failed'
-                }
-            });
         }
+        return res.status(403).json({
+            data: {
+                msg: 'text failed'
+            }
+        });
     });
 });
 
