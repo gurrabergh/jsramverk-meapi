@@ -14,3 +14,4 @@ npm start
 ```
 npm run production
 ```
+[![Build Status](https://travis-ci.com/gurrabergh/jsramverk-meapi.svg?branch=master)](https://travis-ci.com/gurrabergh/jsramverk-meapi)
