@@ -266,13 +266,12 @@ function checkLogin(req, res) {
                 });
             });
             return undefined;
-        } else {
-            return res.status(403).json({
-                data: {
-                    msg: 'login failed'
-                }
-            });
         }
+        return res.status(403).json({
+            data: {
+                msg: 'login failed'
+            }
+        });
     });
     return undefined;
 }
