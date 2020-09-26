@@ -231,6 +231,7 @@ app.use((err, req, res, next) => {
             }
         ]
     });
+    return undefined;
 });
 
 function checkLogin(req, res) {
@@ -264,6 +265,7 @@ function checkLogin(req, res) {
                     }
                 });
             });
+            return undefined;
         } else {
             return res.status(403).json({
                 data: {
