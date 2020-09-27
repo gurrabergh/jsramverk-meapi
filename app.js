@@ -48,62 +48,11 @@ app.get("/", (req, res) => {
     });
 });
 
-app.get("/reports/week/1", (req, res) => {
-    let sql = "SELECT heading, content FROM texts WHERE id = 2";
+app.get("/reports/week/:id", (req, res) => {
+    let id = parseInt(req.params.id) + 1;
+    let sql = "SELECT heading, content FROM texts WHERE id = ?";
 
-    db.get(sql, (err, row) => {
-        if (err) {
-            return res.status(403).json({
-                data: {
-                    msg: 'text failed'
-                }
-            });
-        }
-        if (row) {
-            return res.status(201).json({
-                data: {
-                    text: row
-                }
-            });
-        }
-        return res.status(403).json({
-            data: {
-                msg: 'text failed'
-            }
-        });
-    });
-});
-
-app.get("/reports/week/2", (req, res) => {
-    let sql = "SELECT heading, content FROM texts WHERE id = 3";
-
-    db.get(sql, (err, row) => {
-        if (err) {
-            return res.status(403).json({
-                data: {
-                    msg: 'text failed'
-                }
-            });
-        }
-        if (row) {
-            return res.status(201).json({
-                data: {
-                    text: row
-                }
-            });
-        }
-        return res.status(403).json({
-            data: {
-                msg: 'text failed'
-            }
-        });
-    });
-});
-
-app.get("/reports/week/3", (req, res) => {
-    let sql = "SELECT heading, content FROM texts WHERE id = 4";
-
-    db.get(sql, (err, row) => {
+    db.get(sql, [id], (err, row) => {
         if (err) {
             return res.status(403).json({
                 data: {
