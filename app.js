@@ -298,5 +298,12 @@ function deleteReport(res, body) {
 
 // Start up server
 const server = app.listen(port);
+const io = require('socket.io')(server);
+
+io.on('connection', function (socket) {
+    socket.on('chat message', function (message) {
+        io.emit('chat message', message);
+    });
+});
 
 module.exports = server;
