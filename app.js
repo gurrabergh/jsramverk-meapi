@@ -300,7 +300,7 @@ function deleteReport(res, body) {
 const server = app.listen(port);
 const io = require('socket.io')(server);
 
-io.origins(['https://me.gustavbergh.me']);
+io.origins(['https://me.gustavbergh.me:443']);
 
 io.on('connection', function (socket) {
     socket.on('chat message', function (message) {
