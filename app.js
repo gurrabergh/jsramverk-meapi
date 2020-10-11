@@ -359,7 +359,7 @@ io.origins(['https://me.gustavbergh.me:443']);
 
 io.on('connection', function (socket) {
     socket.on('chat message', function (message) {
-        saveMessage(message);
+        // saveMessage(message);
         io.emit('chat message', message);
     });
 });
