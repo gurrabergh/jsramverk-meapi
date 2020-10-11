@@ -345,6 +345,7 @@ async function saveMessage(message) {
             if (err) {
                 throw err;
             }
+            console.log(res);
             db.close();
         });
     });
@@ -359,7 +360,8 @@ io.origins(['https://me.gustavbergh.me:443']);
 
 io.on('connection', function (socket) {
     socket.on('chat message', function (message) {
-        // saveMessage(message);
+        console.log('message' + message);
+        saveMessage(message);
         io.emit('chat message', message);
     });
 });
