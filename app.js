@@ -8,6 +8,9 @@ var bcrypt = require('bcryptjs');
 const db = require("./db/database.js");
 const port = 1337;
 
+const mongo = require("mongodb").MongoClient;
+const dsn = "mongodb://localhost:27017/messages";
+
 require('dotenv').config();
 app.use(cors());
 
@@ -296,6 +299,58 @@ function deleteReport(res, body) {
     });
 }
 
+app.get("/chat", async (request, response) => {
+    try {
+        let res = await getOldMessages(dsn, "messages", {}, {}, 0);
+
+        console.log(res);
+        response.json(res);
+    } catch (err) {
+        console.log(err);
+        response.json(err);
+    }
+});
+
+app.post("/chat", async (req, response) => {
+    try {
+        let res = await saveMessage(req.body);
+
+        response.json(res);
+    } catch (err) {
+        console.log(err);
+        response.json(err);
+    }
+});
+
+async function getOldMessages(dsn, colName, criteria, projection, limit) {
+    const client  = await mongo.connect(dsn);
+    const db = await client.db();
+    const col = await db.collection(colName);
+    const res = await col.find(criteria, projection).limit(limit).toArray();
+
+    await client.close();
+
+    return res;
+}
+
+async function saveMessage(message) {
+    mongo.connect(dsn, function(err, db) {
+        if (err) {
+            throw err;
+        }
+        var dbo = db.db("messages");
+        var msg = message;
+
+        dbo.collection("messages").insertOne(msg, function(err, res) {
+            if (err) {
+                throw err;
+            }
+            db.close();
+        });
+    });
+}
+
+
 // Start up server
 const server = app.listen(port);
 const io = require('socket.io')(server);
@@ -304,6 +359,7 @@ io.origins(['https://me.gustavbergh.me:443']);
 
 io.on('connection', function (socket) {
     socket.on('chat message', function (message) {
+        saveMessage(message);
         io.emit('chat message', message);
     });
 });
