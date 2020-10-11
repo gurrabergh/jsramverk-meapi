@@ -339,7 +339,7 @@ async function saveMessage(message) {
             throw err;
         }
         var dbo = db.db("messages");
-        var msg = message;
+        var msg = { text: message };
 
         dbo.collection("messages").insertOne(msg, function(err, res) {
             if (err) {
